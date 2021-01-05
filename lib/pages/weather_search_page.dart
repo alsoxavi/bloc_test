@@ -1,7 +1,7 @@
-import 'package:bloc_test/cubit/weather_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:bloc_test/data/model/weather.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_test/bloc/weather_bloc.dart';
+import 'package:bloc_test/data/model/weather.dart';
 
 class WeatherSearchPage extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _WeatherSearchPageState extends State<WeatherSearchPage> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
-        child: BlocConsumer<WeatherCubit, WeatherState>(
+        child: BlocConsumer<WeatherBloc, WeatherState>(
           // cubit: BlocProvider.of<WeatherCubit>(context), esto es automatico con el padre BlocProvider
           listener: (context, state) {
             if (state is WeatherError) {
@@ -98,7 +98,7 @@ class CityInputField extends StatelessWidget {
   }
 
   void submitCityName(BuildContext context, String cityName) {
-    final weatherCubit = context.read<WeatherCubit>();
-    weatherCubit.getWeather(cityName);
+    final weatherCubit = context.read<WeatherBloc>();
+    weatherCubit.add(GetWeather(cityName));
   }
 }
